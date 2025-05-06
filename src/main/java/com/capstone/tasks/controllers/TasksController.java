@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(origins = "https://tasks-ui.onrender.com")
 @RestController
 @RequestMapping(path = "/api/task-lists/{task_list_id}/tasks")
 public class TasksController {
@@ -41,6 +42,7 @@ public class TasksController {
         return taskMapper.toDto(createdTask);
     }
 
+    @CrossOrigin(origins = "https://tasks-ui.onrender.com")
     @GetMapping(path = "/{task_id}")
     public Optional<TaskDto> getTask(
             @PathVariable("task_list_id") UUID taskListId,
@@ -49,6 +51,7 @@ public class TasksController {
         return taskService.getTask(taskListId, taskId).map(taskMapper::toDto);
     }
 
+    @CrossOrigin(origins = "https://tasks-ui.onrender.com")
     @PutMapping(path = "/{task_id}")
     public TaskDto updateTask(
             @PathVariable("task_list_id") UUID taskListId,
@@ -63,6 +66,8 @@ public class TasksController {
 
         return taskMapper.toDto(updatedTask);
     }
+
+    @CrossOrigin(origins = "https://tasks-ui.onrender.com")
     @DeleteMapping(path = "/{task_id}")
     public void deleteTask(
             @PathVariable("task_list_id") UUID taskListId,
@@ -70,7 +75,7 @@ public class TasksController {
     ) {
         taskService.deleteTask(taskListId, taskId);
     }
-
+    @CrossOrigin(origins = "https://tasks-ui.onrender.com")
     @GetMapping("/search")
     public List<TaskDto> searchTasks(
             @PathVariable("task_list_id") UUID taskListId,

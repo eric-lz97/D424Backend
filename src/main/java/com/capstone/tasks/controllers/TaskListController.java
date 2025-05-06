@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@CrossOrigin(origins = "https://tasks-ui.onrender.com")
 @RestController
 @RequestMapping(path = "/api/task-lists")
 public class TaskListController {
@@ -54,6 +55,12 @@ public class TaskListController {
         );
 
         return taskListMapper.toDto(updatedTaskList);
+    }
+
+    @DeleteMapping(path = "/{task_list_id}")
+    public void deleteTaskList(@PathVariable("task_list_id") UUID taskListId) {
+
+        taskListService.deleteTaskList(taskListId );
     }
 
 }
