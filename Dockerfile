@@ -1,13 +1,11 @@
-FROM maven:3.9.6-eclipse-temurin-21 AS BUILD
-
-# Copy your Maven project files into the container
+# Build Stage
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+WORKDIR /app
 COPY . .
-
 RUN mvn clean package -DskipTests
 
+# Run Stage
 FROM openjdk:21-slim
-COPY --from=build /target/tasks-0.0.1-SNAPSHOT.jar tasks.jar
-
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "tasks.jar"]
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
